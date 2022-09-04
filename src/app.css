@@ -9,3 +9,14 @@ a[href]:not(.no-underline) {
 body {
 	margin: 1em;
 }
+
+button {
+	@apply border rounded p-2 font-bold;
+}
+button:disabled {
+	@apply bg-opacity-20 cursor-not-allowed;
+}
+button:enabled {
+	@apply active:translate-y-1;
+	@apply hover:cursor-pointer hover:shadow-md;
+}

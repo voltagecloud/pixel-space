@@ -1,34 +1,22 @@
 <script lang="ts">
 	import PixelGrid from '$lib/PixelGrid.svelte';
+	import type { PageData } from './$types';
+	import Controls from './Controls.svelte';
+
+	export let data: PageData;
+	const { pixelColors, size } = data;
+
+	let drawColor = data.drawColor;
+	let drawn: number[] = [];
 </script>
 
-<main class="lg:absolute lg:inset-0 flex flex-col lg:flex-row">
+<form class="lg:absolute lg:inset-0 flex flex-col lg:flex-row" action="/grid/purchase" method="post">
 	<section class="flex-1 flex flex-col pb-4 lg:p-4 overflow-auto">
 		<div class="flex-1 flex justify-center items-start">
-			<PixelGrid />
+			<PixelGrid {size} {drawColor} {pixelColors} on:change={({ detail }) => (drawn = detail)} />
 		</div>
 	</section>
 	<aside class="border-t lg:border-t-0 lg:border-l pt-4 lg:p-4 lg:overflow-auto lg:basis-96">
-		<p>aside Lorem ipsum, dolor sit amet consect</p>
-		<p>aside Lorem ipsum, dolor sit amet consect</p>
-		<p>aside Lorem ipsum, dolor sit amet consect</p>
-		<p>aside Lorem ipsum, dolor sit amet consect</p>
-		<p>aside Lorem ipsum, dolor sit amet consect</p>
-		<p>aside Lorem ipsum, dolor sit amet consect</p>
-		<p>aside Lorem ipsum, dolor sit amet consect</p>
-		<p>aside Lorem ipsum, dolor sit amet consect</p>
-		<p>aside Lorem ipsum, dolor sit amet consect</p>
-		<p>aside Lorem ipsum, dolor sit amet consect</p>
-		<p>aside Lorem ipsum, dolor sit amet consect</p>
-		<p>aside Lorem ipsum, dolor sit amet consect</p>
-		<p>aside Lorem ipsum, dolor sit amet consect</p>
-		<p>aside Lorem ipsum, dolor sit amet consect</p>
-		<p>aside Lorem ipsum, dolor sit amet consect</p>
-
-		<p>aside Lorem ipsum, dolor sit amet consect</p>
-		<p>aside Lorem ipsum, dolor sit amet consect</p>
-		<p>aside Lorem ipsum, dolor sit amet consect</p>
-		<p>aside Lorem ipsum, dolor sit amet consect</p>
-		<p>aside Lorem ipsum, dolor sit amet consect</p>
+		<Controls bind:drawColor {drawn} />
 	</aside>
-</main>
+</form>

@@ -5,7 +5,7 @@ function draw(node: HTMLUListElement): SvelteActionReturnType {
 		const box = isLabel && evt.target.parentNode?.querySelector('input');
 		switch (evt.type) {
 			case 'mousedown':
-        drawing = box ? !box.checked : true;
+				drawing = box ? !box.checked : true;
 				break;
 			case 'mouseleave':
 			case 'mouseup':
@@ -14,6 +14,7 @@ function draw(node: HTMLUListElement): SvelteActionReturnType {
 			case 'mousemove':
 				if (box && drawing !== null) {
 					box.checked = drawing;
+					box.dispatchEvent(new Event('change', { bubbles: true }));
 				}
 				break;
 		}
