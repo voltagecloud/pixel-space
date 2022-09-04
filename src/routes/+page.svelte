@@ -1,2 +1,5 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<ul class="list-inside list-disc">
+  <li>
+    <a href="/grid">view grid</a>
+  </li>
+</ul>
