@@ -5,17 +5,13 @@ function draw(node: HTMLUListElement): SvelteActionReturnType {
 		const box = isLabel && evt.target.parentNode?.querySelector('input');
 		switch (evt.type) {
 			case 'mousedown':
-				drawing = true;
-				if (box) {
-					drawing = !box.checked;
-					box.checked = drawing;
-				}
+        drawing = box ? !box.checked : true;
 				break;
 			case 'mouseleave':
 			case 'mouseup':
 				drawing = null;
 				break;
-			case 'mouseover':
+			case 'mousemove':
 				if (box && drawing !== null) {
 					box.checked = drawing;
 				}
@@ -25,14 +21,14 @@ function draw(node: HTMLUListElement): SvelteActionReturnType {
 
 	node.addEventListener('mousedown', mouseEvtHandler);
 	node.addEventListener('mouseup', mouseEvtHandler);
-	node.addEventListener('mouseover', mouseEvtHandler);
+	node.addEventListener('mousemove', mouseEvtHandler);
 	node.addEventListener('mouseleave', mouseEvtHandler);
 
 	return {
 		destroy() {
 			node.removeEventListener('mousedown', mouseEvtHandler);
 			node.removeEventListener('mouseup', mouseEvtHandler);
-			node.removeEventListener('mouseover', mouseEvtHandler);
+			node.removeEventListener('mousemove', mouseEvtHandler);
 			node.removeEventListener('mouseleave', mouseEvtHandler);
 		}
 	};
