@@ -5,3 +5,7 @@
 a[href]:not(.no-underline) {
 	@apply text-blue-500 underline decoration-blue-200 hover:decoration-current;
 }
+
+body {
+	margin: 1em;
+}
