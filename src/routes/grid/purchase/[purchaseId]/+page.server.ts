@@ -17,6 +17,7 @@ export const load: PageServerLoad = async ({ params, locals: { prisma } }) => {
 	const pixelCount = await prisma.pixel.count({
 		where: { purchases: { some: { id: purchase.id } } }
 	});
+
 	return { purchase, pixelCount };
 };
 

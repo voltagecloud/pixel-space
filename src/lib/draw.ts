@@ -14,7 +14,6 @@ function draw(node: HTMLUListElement): SvelteActionReturnType {
 				break;
 			case 'pointermove':
 				if (box && drawing !== null && box.checked !== drawing) {
-					console.log(evt);
 					box.checked = drawing;
 					box.dispatchEvent(new Event('change', { bubbles: true }));
 				}
