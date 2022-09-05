@@ -8,4 +8,6 @@
 			<a href="/grid">view grid</a>
 		</li>
 	</ul>
+
+	<pre>{JSON.stringify(import.meta.env, null, 2)}</pre>
 </main>

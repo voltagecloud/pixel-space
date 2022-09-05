@@ -17,10 +17,20 @@ model Pixel {
 }
 
 model Purchase {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   pixels    Pixel[]
   complete  Boolean?
   color     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  payments  Payment[]
+}
+
+model Payment {
+  id         Int      @id @default(autoincrement())
+  for        Purchase @relation(fields: [purchaseId], references: [id])
+  purchaseId String
+  hash       String
+  request    String
+  amount     Int
 }
