@@ -9,7 +9,7 @@
 	const { pixelColors, size } = data;
 
 	let drawColor = $page.url.hash || '#ff5500';
-	let drawn: number[] = [];
+	let drawCount = 0;
 </script>
 
 <form
@@ -19,10 +19,15 @@
 >
 	<section class="flex-1 flex flex-col pb-4 lg:p-4 overflow-auto">
 		<div class="flex-1 flex justify-center items-start">
-			<PixelGrid {size} {drawColor} {pixelColors} on:change={({ detail }) => (drawn = detail)} />
+			<PixelGrid
+				{size}
+				{drawColor}
+				{pixelColors}
+				on:change={({ detail }) => (drawCount = detail.length)}
+			/>
 		</div>
 	</section>
 	<aside class="border-t lg:border-t-0 lg:border-l pt-4 lg:p-4 lg:overflow-auto lg:basis-52">
-		<Controls bind:drawColor {drawn} />
+		<Controls bind:drawColor {drawCount} />
 	</aside>
 </form>

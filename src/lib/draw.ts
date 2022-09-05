@@ -1,18 +1,20 @@
 function draw(node: HTMLUListElement): SvelteActionReturnType {
 	let drawing: boolean | null = null;
-	function mouseEvtHandler(evt: MouseEvent) {
+
+	function handler(evt: PointerEvent) {
 		const isLabel = evt.target instanceof HTMLLabelElement;
 		const box = isLabel && evt.target.parentNode?.querySelector('input');
 		switch (evt.type) {
-			case 'mousedown':
+			case 'pointerdown':
 				drawing = box ? !box.checked : true;
 				break;
-			case 'mouseleave':
-			case 'mouseup':
+			case 'pointerleave':
+			case 'pointerup':
 				drawing = null;
 				break;
-			case 'mousemove':
-				if (box && drawing !== null) {
+			case 'pointermove':
+				if (box && drawing !== null && box.checked !== drawing) {
+					console.log(evt);
 					box.checked = drawing;
 					box.dispatchEvent(new Event('change', { bubbles: true }));
 				}
@@ -20,17 +22,17 @@ function draw(node: HTMLUListElement): SvelteActionReturnType {
 		}
 	}
 
-	node.addEventListener('mousedown', mouseEvtHandler);
-	node.addEventListener('mouseup', mouseEvtHandler);
-	node.addEventListener('mousemove', mouseEvtHandler);
-	node.addEventListener('mouseleave', mouseEvtHandler);
+	node.addEventListener('pointerdown', handler);
+	node.addEventListener('pointerup', handler);
+	node.addEventListener('pointermove', handler);
+	node.addEventListener('pointerleave', handler);
 
 	return {
 		destroy() {
-			node.removeEventListener('mousedown', mouseEvtHandler);
-			node.removeEventListener('mouseup', mouseEvtHandler);
-			node.removeEventListener('mousemove', mouseEvtHandler);
-			node.removeEventListener('mouseleave', mouseEvtHandler);
+			node.removeEventListener('pointerdown', handler);
+			node.removeEventListener('pointerup', handler);
+			node.removeEventListener('pointermove', handler);
+			node.removeEventListener('pointerleave', handler);
 		}
 	};
 }

@@ -32,7 +32,7 @@
 	{#each Array(size) as _, index}
 		{@const id = `pixel-${index}`}
 		{@const color = pixelColors[index]}
-		<li title={color ? `${id} (${color})` : id} class:blank={!color}>
+		<li title={color} class:blank={!color}>
 			<input type="checkbox" {id} name="pixel" value={index} />
 			<label for={id} style={color && `--pixel-color: ${color}`} />
 		</li>
@@ -51,7 +51,7 @@
 		background-color: var(--pixel-color);
 	}
 	li.blank > label {
-		@apply border;
+		@apply border shadow-inner;
 	}
 	input:checked + label {
 		border: none;

@@ -2,7 +2,7 @@
 	import { browser } from '$app/environment';
 
 	export let drawColor: string;
-	export let drawn: number[];
+	export let drawCount: number;
 
 	$: if (browser) {
 		location.hash = drawColor.substring(1);
@@ -12,15 +12,21 @@
 {#if browser}
 	<div class="sm:flex items-center justify-between lg:block">
 		<label class="inline-flex items-center gap-2">
-			<input type="color" name="color" bind:value={drawColor} />
-			<code>{drawColor}</code>
+			<input
+				type="text"
+				name="color"
+				bind:value={drawColor}
+				class="w-24 invalid:bg-red-300"
+				pattern={`^#[A-Fa-f0-9]{6}$`}
+			/>
+			<input type="color" bind:value={drawColor} class="h-12 w-16" />
 		</label>
 
 		<p class="my-4">
-			<strong class="font-mono align-middle">
-				{drawn.length} pixels drawn
-			</strong>
-			<button type="submit" disabled={!drawn.length}>Submit</button>
+			<button type="submit" disabled={!drawCount}>Save</button>
+			<span class="font-mono align-middle">
+				<strong>{drawCount}</strong> pixels
+			</span>
 		</p>
 	</div>
 {/if}
