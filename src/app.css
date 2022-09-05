@@ -14,9 +14,10 @@ button {
 	@apply border rounded p-2 font-bold;
 }
 button:disabled {
-	@apply bg-opacity-20 cursor-not-allowed;
+	@apply border-dashed text-gray-500 cursor-not-allowed;
 }
 button:enabled {
+	@apply border-transparent text-white bg-blue-500;
 	@apply active:translate-y-1;
 	@apply hover:cursor-pointer hover:shadow-md;
 }

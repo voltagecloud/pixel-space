@@ -18,7 +18,7 @@
 			<PixelGrid {size} {drawColor} {pixelColors} on:change={({ detail }) => (drawn = detail)} />
 		</div>
 	</section>
-	<aside class="border-t lg:border-t-0 lg:border-l pt-4 lg:p-4 lg:overflow-auto lg:basis-96">
+	<aside class="border-t lg:border-t-0 lg:border-l pt-4 lg:p-4 lg:overflow-auto lg:basis-52">
 		<Controls bind:drawColor {drawn} />
 	</aside>
 </form>

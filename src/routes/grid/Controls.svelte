@@ -10,14 +10,17 @@
 </script>
 
 {#if browser}
+<div class="sm:flex items-center justify-between lg:block">
 	<label class="inline-flex items-center gap-2">
 		<input type="color" name="color" bind:value={drawColor} />
 		<code>{drawColor}</code>
 	</label>
 
-	<p class="my-4 font-mono text-5xl">
-		{drawn.length}
+	<p class="my-4">
+		<strong class="font-mono align-middle">
+			{drawn.length} pixels drawn
+		</strong>
+		<button type="submit" disabled={!drawn.length}>Submit</button>
 	</p>
-
-	<button class="bg-blue-400" type="submit" disabled={!drawn.length}>Submit</button>
+</div>
 {/if}
