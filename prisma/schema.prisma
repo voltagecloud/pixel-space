@@ -32,7 +32,6 @@ model Payment {
   for        Purchase @relation(fields: [purchaseId], references: [id])
   purchaseId String
   hash       String   @unique
-  request    String
   amount     Int
   paid       Boolean?
 }
