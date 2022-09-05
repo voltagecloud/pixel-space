@@ -1,7 +1,6 @@
 # pixel-space
 
 ```bash
-yarn
-yarn prisma db seed
+yarn install
 yarn run dev
 ```
