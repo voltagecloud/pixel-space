@@ -6,7 +6,7 @@ export const load: PageServerLoad = async ({ params, locals: { prisma } }) => {
 	let purchase: Purchase;
 	try {
 		purchase = await prisma.purchase.findUniqueOrThrow({
-			where: { id: Number(params.purchaseId) }
+			where: { id: params.purchaseId }
 		});
 	} catch (e) {
 		throw error(404, String(e));
@@ -22,7 +22,7 @@ export const load: PageServerLoad = async ({ params, locals: { prisma } }) => {
 
 export const POST: Action = async ({ params, locals: { prisma } }) => {
 	const purchase = await prisma.purchase.update({
-		where: { id: Number(params.purchaseId) },
+		where: { id: params.purchaseId },
 		data: { complete: true },
 		include: { pixels: { select: { id: true } } }
 	});

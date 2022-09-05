@@ -17,7 +17,7 @@ model Pixel {
 }
 
 model Purchase {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   pixels    Pixel[]
   complete  Boolean?
   color     String

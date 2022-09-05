@@ -4,4 +4,4 @@ node_modules
 /.svelte-kit
 /package
 .env.local
-/prisma/dev.db
+/prisma/dev.db*

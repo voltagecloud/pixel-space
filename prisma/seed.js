@@ -1,10 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import { gridSize } from '../src/lib/constants.js';
 
-const prisma = new PrismaClient({ log: ['query'] });
+const prisma = new PrismaClient();
 
-await Promise.all([prisma.pixel.deleteMany(), prisma.purchase.deleteMany()]);
-
-for (let i = 0; i < gridSize; i++) {
-	await prisma.pixel.create({ data: { id: i } });
+for (let id = 0; id < gridSize; id++) {
+	await prisma.pixel.upsert({ where: { id }, create: { id }, update: { } });
 }

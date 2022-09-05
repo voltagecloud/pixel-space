@@ -1,6 +1,12 @@
 -- CreateTable
-CREATE TABLE "Purchase" (
+CREATE TABLE "Pixel" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "color" TEXT
+);
+
+-- CreateTable
+CREATE TABLE "Purchase" (
+    "id" TEXT NOT NULL PRIMARY KEY,
     "complete" BOOLEAN,
     "color" TEXT NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -10,7 +16,7 @@ CREATE TABLE "Purchase" (
 -- CreateTable
 CREATE TABLE "_PixelToPurchase" (
     "A" INTEGER NOT NULL,
-    "B" INTEGER NOT NULL,
+    "B" TEXT NOT NULL,
     CONSTRAINT "_PixelToPurchase_A_fkey" FOREIGN KEY ("A") REFERENCES "Pixel" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT "_PixelToPurchase_B_fkey" FOREIGN KEY ("B") REFERENCES "Purchase" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
