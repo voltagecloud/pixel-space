@@ -11,7 +11,16 @@ datasource db {
 }
 
 model Pixel {
-  id    Int     @id @default(autoincrement())
-  color  String?
+  id        Int        @id
+  color     String?
+  purchases Purchase[]
 }
 
+model Purchase {
+  id        Int      @id @default(autoincrement())
+  pixels    Pixel[]
+  complete  Boolean?
+  color     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+
 	import PixelGrid from '$lib/PixelGrid.svelte';
 	import type { PageData } from './$types';
 	import Controls from './Controls.svelte';
@@ -6,7 +8,7 @@
 	export let data: PageData;
 	const { pixelColors, size } = data;
 
-	let drawColor = data.drawColor;
+	let drawColor = $page.url.hash || '#ff5500';
 	let drawn: number[] = [];
 </script>
 

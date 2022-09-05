@@ -1,25 +1,26 @@
+import { gridSize } from '$lib/constants';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad, Action } from './$types';
 
 export const load: PageServerLoad = () => {
-  throw redirect(301, '/grid');
+	throw redirect(301, '/grid');
 };
 
 export const POST: Action = async ({ locals: { prisma }, request }) => {
-  const data = await request.formData();
-  const color = String(data.get('color')).substring(0, 7);
-  const checked = data.getAll('pixel').map(Number);
-  console.log({ checked, color });
+	const data = await request.formData();
+	const color = String(data.get('color')).substring(0, 7);
 
-  for (const id of checked) {
-    await prisma.pixel.upsert({
-      where: { id },
-      create: { id, color },
-      update: { color }
-    })    
-  }
+  const connect = data
+		.getAll('pixel')
+		.map(Number)
+		.filter((id) => id < gridSize)
+    .map((id) => ({ id }));
 
-  return {
-    location: `/grid?color=${color.substring(1)}`
-  }
+	const purchase = await prisma.purchase.create({
+		data: { color, pixels: { connect } }
+	});
+
+	return {
+		location: `/grid/purchase/${purchase.id}`
+	};
 };

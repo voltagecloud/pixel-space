@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
+	import { gridCols, gridSize } from './constants';
 	import draw from './draw';
 
 	export let pixelColors: Record<number, string> = {};
 	export let drawColor: string = 'currentColor';
-	export let size = 1e4;
-	export let cols = 1e2;
+	export let size = gridSize;
+	export let cols = gridCols;
 
 	interface $$Events {
 		change: CustomEvent<number[]>;
