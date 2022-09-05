@@ -3,10 +3,10 @@
 
 	export let data: PageData;
 
-	const { purchase } = data;
+	const { purchase, pixelCount } = data;
 </script>
 
-<p class="text-4xl">Color <strong>{purchase.pixels.length} pixels</strong> with <code>{purchase.color}</code>...</p>
+<p class="text-4xl">Color <strong>{pixelCount} pixels</strong> with <code>{purchase.color}</code>...</p>
 
 <form class="my-4 flex gap-4 items-center" method="post">
 	<button type="submit">Yes, do it</button>
