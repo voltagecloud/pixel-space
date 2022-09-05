@@ -1,9 +1,15 @@
 <script lang="ts">
-  import type { PageData } from "./$types";
+	import type { PageData } from './$types';
 
-  export let data: PageData;
+	export let data: PageData;
 
-  const { purchase } = data;
+	const { purchase } = data;
 </script>
 
-<pre>{JSON.stringify(purchase, null, 2)}</pre>
+<p class="text-4xl">Color <strong>{purchase.pixels.length} pixels</strong> with <code>{purchase.color}</code>...</p>
+
+<form class="my-4 flex gap-4 items-center" method="post">
+	<button type="submit">Yes, do it</button>
+	<span>or</span>
+	<a href={`/grid${purchase.color}`}>Cancel</a>
+</form>
