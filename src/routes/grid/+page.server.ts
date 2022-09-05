@@ -3,7 +3,7 @@ import { gridSize } from '$lib/constants';
 
 export const load: PageServerLoad = async ({ locals: { prisma } }) => {
 	const pixels = await prisma.pixel.findMany({ take: gridSize });
-  return {
+	return {
 		size: gridSize,
 		pixelColors: pixels.reduce(
 			(prev, val) => ({
