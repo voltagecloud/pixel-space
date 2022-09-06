@@ -11,13 +11,16 @@ body {
 }
 
 button {
-	@apply border rounded p-2 font-bold;
+	@apply border rounded-md px-3 leading-loose font-medium;
 }
 button:disabled {
-	@apply border-dashed text-gray-500 cursor-not-allowed;
+	@apply border-dashed text-gray-400 cursor-not-allowed;
 }
 button:enabled {
-	@apply border-transparent text-white bg-blue-500;
-	@apply active:translate-y-1;
-	@apply hover:cursor-pointer hover:shadow-md;
+	@apply active:translate-y-px;
+	@apply hover:shadow-md;
+}
+
+button[type="submit"]:enabled {
+	@apply text-white bg-blue-500 border-blue-700;
 }

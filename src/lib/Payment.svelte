@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { dev } from '$app/environment';
+
 	import { minChargePerPixel } from '$lib/constants';
 	import QrCode from '$lib/QrCode.svelte';
 	import { createEventDispatcher, onDestroy } from 'svelte';
@@ -74,6 +76,11 @@
 			<input type="range" min={minimum} max={maximum} bind:value={amount} />
 			<span>{amount.toLocaleString()} sats</span>
 		</label>
-		<button type="submit">Get invoice</button>
+		<p>
+			<button type="submit">Get invoice</button>
+			{#if dev}
+				<button type="button" on:click={() => dispatch('paid')}>Skip payment</button>
+			{/if}
+		</p>
 	</form>
 {/if}

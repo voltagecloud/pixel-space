@@ -23,10 +23,9 @@
 		</label>
 
 		<p class="my-4">
-			<button type="submit" disabled={!drawCount}>Save</button>
-			<span class="font-mono align-middle">
-				<strong>{drawCount}</strong> pixels
-			</span>
+			<button type="submit" disabled={!drawCount}>
+				Save <strong class="font-mono">{drawCount}</strong> pixels
+			</button>
 		</p>
 	</div>
 {/if}

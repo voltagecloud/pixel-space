@@ -9,7 +9,7 @@
 	const { purchase, pixelCount } = data;
 
 	let form: HTMLFormElement;
-	let paymentHash: string;
+	let paymentHash = '';
 
 	async function handlePaid({ detail }: CustomEvent<string>) {
 		paymentHash = detail;
@@ -19,7 +19,7 @@
 </script>
 
 <p class="text-4xl">
-	Color <strong>{pixelCount} pixels</strong>
+	Color <strong class="font-mono">{pixelCount}</strong> pixels
 	<span class="inline-flex items-baseline gap-2">
 		<span
 			class="w-6 h-6 inline-block border rounded"
@@ -41,5 +41,3 @@
 		<a href={`/grid${purchase.color}`}>Cancel purchase</a>
 	</p>
 {/if}
-
-
