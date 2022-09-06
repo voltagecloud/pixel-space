@@ -27,8 +27,6 @@ export const POST: RequestHandler = async ({ request, locals: { prisma } }) => {
 	const memo = `${purchase.color} x${pixelCount}`;
 	const invoice = await createInvoice({ amount, memo });
 
-	console.log(invoice);
-
 	await prisma.payment.create({
 		data: {
 			amount,

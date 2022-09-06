@@ -59,7 +59,7 @@
 		{#if checking}
 			<p>Checking for payment...</p>
 		{:else}
-			<p>Please pay the invoice!</p>
+			<p>Please pay {amount.toLocaleString()} sats!</p>
 		{/if}
 		<div class="max-w-sm">
 			<QrCode value={lni.payment_request} />
