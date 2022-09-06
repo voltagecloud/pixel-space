@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { minChargePerPixel } from '$lib/constants';
+import QrCode from '$lib/QrCode.svelte';
 	import { createEventDispatcher } from 'svelte';
 
 	interface $$Events {
@@ -24,6 +25,7 @@
       dispatch('paid', hash);
     }
 	}
+
 </script>
 
 <form on:submit|preventDefault={handleSubmit} class="flex flex-col gap-4 items-start">
@@ -34,3 +36,5 @@
 	</label>
 	<button type="submit">Get invoice</button>
 </form>
+
+<QrCode value="Lorem ipsum dolor!" />

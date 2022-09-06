@@ -1,14 +1,16 @@
 <script lang="ts">
-  import QRCode from 'qrcode';
-
-  const qr = new QRCode();
+  import { toDataURL } from 'qrcode';
 
   export let value = "";
-  let data: Promise<string>;
+  export let scale = 8;
 
-  $: if(value) { data = QRCode.toDataURL(value); }
+  let data: Promise<string>;
+  $: if(value) { data = toDataURL(value, { margin: 0, scale }); }
 </script>
 
 {#await data then src}
-  <img {src} alt={value} />  
+  <figure class="inline-flex flex-col my-4 border rounded shadow-md">
+    <img {src} alt={value} class="p-4 border-b" />
+    <figcaption class="p-4 max-w-fit text-xs text-justify">{value}</figcaption>
+  </figure>
 {/await}
