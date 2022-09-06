@@ -5,7 +5,7 @@
 	import QrCode from '$lib/QrCode.svelte';
 	import { createEventDispatcher, onDestroy } from 'svelte';
 	import type { LnInvoice } from './lnbits.server';
-	import { postJson } from './util';
+	import { postJson } from './utils';
 
 	interface $$Events {
 		paid: CustomEvent<string>;
