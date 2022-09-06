@@ -21,6 +21,7 @@ export const load: PageServerLoad = async ({ params, locals: { prisma } }) => {
 	return { purchase, pixelCount };
 };
 
+
 export const POST: Action = async ({ params, locals: { prisma }, request }) => {
 	const data = await request.formData();
 	const hash = String(data.get('paymentHash'));

@@ -2,7 +2,7 @@
 	import { tick } from 'svelte';
 
 	import type { PageData } from './$types';
-	import Payment from './Payment.svelte';
+	import Payment from '$lib/Payment.svelte';
 
 	export let data: PageData;
 

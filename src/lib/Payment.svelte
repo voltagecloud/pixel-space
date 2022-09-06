@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { minChargePerPixel } from '$lib/constants';
-import QrCode from '$lib/QrCode.svelte';
+	import QrCode from '$lib/QrCode.svelte';
 	import { createEventDispatcher } from 'svelte';
 
 	interface $$Events {
@@ -37,4 +37,3 @@ import QrCode from '$lib/QrCode.svelte';
 	<button type="submit">Get invoice</button>
 </form>
 
-<QrCode value="Lorem ipsum dolor!" />

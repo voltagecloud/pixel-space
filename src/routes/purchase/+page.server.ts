@@ -1,10 +1,5 @@
 import { gridSize } from '$lib/constants';
-import { redirect } from '@sveltejs/kit';
-import type { PageServerLoad, Action } from './$types';
-
-export const load: PageServerLoad = () => {
-	throw redirect(301, '/grid');
-};
+import type { Action } from './$types';
 
 export const POST: Action = async ({ locals: { prisma }, request }) => {
 	const data = await request.formData();
@@ -21,6 +16,6 @@ export const POST: Action = async ({ locals: { prisma }, request }) => {
 	});
 
 	return {
-		location: `/grid/purchase/${purchase.id}`
+		location: `/purchase/${purchase.id}`
 	};
 };

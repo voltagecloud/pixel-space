@@ -14,7 +14,7 @@
 
 <form
 	class="lg:absolute lg:inset-0 flex flex-col lg:flex-row"
-	action="/grid/purchase"
+	action="/purchase"
 	method="post"
 >
 	<section class="flex-1 flex flex-col pb-4 lg:p-4 overflow-auto">
