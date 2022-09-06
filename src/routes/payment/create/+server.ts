@@ -24,11 +24,19 @@ export const POST: RequestHandler = async ({ request, locals: { prisma } }) => {
 	}
 
 	// create a new payment for the given purchase
-  const memo = `${purchase.color} x${pixelCount}`;
+	const memo = `${purchase.color} x${pixelCount}`;
 	const invoice = await createInvoice({ amount, memo });
 
+	console.log(invoice);
+
 	await prisma.payment.create({
-		data: { amount, purchaseId, hash: invoice.payment_hash }
+		data: {
+			amount,
+			hash: invoice.payment_hash,
+			for: {
+				connect: { id: purchaseId }
+			}
+		}
 	});
 
 	return json(invoice);

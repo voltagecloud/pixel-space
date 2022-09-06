@@ -13,6 +13,6 @@
 {#await data then src}
 	<figure class="flex flex-col my-4 border rounded shadow-md">
 		<img {src} alt={value} class="p-4 border-b" />
-		<figcaption class="p-4 break-words text-xs">{value}</figcaption>
+		<figcaption class="p-4 break-words font-mono text-xs">{value}</figcaption>
 	</figure>
 {/await}

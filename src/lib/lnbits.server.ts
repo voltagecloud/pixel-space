@@ -16,8 +16,16 @@ async function lnbits<T>(
 		headers: { 'X-Api-Key': LNBITS_INVOICE_KEY, 'Content-Type': 'application/json' }
 	});
 
+	if (!result.ok) {
+		throw new Error(result.statusText);
+	}
 	return result.json() as Promise<T>;
 }
+
+export type LnInvoice = {
+	payment_hash: string;
+	payment_request: string;
+};
 
 export function createInvoice(params: {
 	amount: number;
@@ -25,11 +33,7 @@ export function createInvoice(params: {
 	unit?: string;
 	webhook?: string;
 }) {
-	return lnbits<{ payment_hash: string; payment_request: string }>(
-		'POST',
-		'/api/v1/payments',
-		params
-	);
+	return lnbits<LnInvoice>('POST', '/api/v1/payments', { ...params, out: false });
 }
 
 export function checkInvoice(paymentHash: string) {

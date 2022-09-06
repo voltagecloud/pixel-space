@@ -2,8 +2,11 @@ import { checkInvoice } from '$lib/lnbits.server';
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async ({ params, locals: { prisma } }) => {
-	let payment = await prisma.payment.findUnique({ where: { hash: params.hash } });
+export const POST: RequestHandler = async ({ request, locals: { prisma } }) => {
+	const input = await request.json();
+	const { hash } = input as { hash: string; };
+
+	let payment = await prisma.payment.findUnique({ where: { hash } });
 
 	if (payment && !payment.paid) {
 		const { paid } = await checkInvoice(payment.hash);
@@ -15,5 +18,5 @@ export const GET: RequestHandler = async ({ params, locals: { prisma } }) => {
 		}
 	}
 
-	return json({ payment });
+	return json({ paid: payment?.paid });
 };
