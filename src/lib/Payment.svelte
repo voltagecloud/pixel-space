@@ -5,6 +5,7 @@
 	import QrCode from '$lib/QrCode.svelte';
 	import { createEventDispatcher, onDestroy } from 'svelte';
 	import type { LnInvoice } from './lnbits.server';
+	import { postJson } from './utils';
 
 	interface $$Events {
 		paid: CustomEvent<string>;
@@ -20,14 +21,6 @@
 	let invoice: Promise<LnInvoice> | null = null;
 
 	const dispatch = createEventDispatcher();
-
-	function postJson<T>(url: string, data: unknown) {
-		return fetch(url, {
-			method: 'POST',
-			body: JSON.stringify(data),
-			headers: { 'Content-Type': 'application/json' }
-		}).then((res) => res.json() as T);
-	}
 
 	let timeout: NodeJS.Timeout;
 
