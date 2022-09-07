@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+//generator client {
+//  provider = "prisma-client-js"
+//}
+
+generator client {
+  provider  = "prisma-client-py"
+  interface = "sync"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:dev.db"
+}
+
+model Pixel {
+  id        Int        @id @default(autoincrement())
+  color     String?
+  purchases Purchase[]
+  updatedAt DateTime   @updatedAt
+}
+
+model Purchase {
+  id        String    @id @default(uuid())
+  pixels    Pixel[]
+  complete  Boolean?
+  color     String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  payments  Payment[]
+}
+
+model Payment {
+  id         Int      @id @default(autoincrement())
+  memo       Purchase @relation(fields: [purchaseId], references: [id])
+  purchaseId String
+  hash       String   @unique
+  amount     Int
+  paid       Boolean?
+}
