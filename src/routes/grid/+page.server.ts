@@ -6,10 +6,13 @@ export const load: PageServerLoad = async ({ locals: { prisma } }) => {
 	return {
 		size: gridSize,
 		pixelColors: pixels.reduce(
-			(prev, val) => ({
-				...prev,
-				[val.id]: val.color
-			}),
+			(prev, val) =>
+				val.color
+					? {
+							...prev,
+							[val.id]: val.color
+					  }
+					: prev,
 			{}
 		)
 	};
