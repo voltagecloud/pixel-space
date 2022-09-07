@@ -56,7 +56,7 @@
 		{:else}
 			<p>Please pay {amount.toLocaleString()} sats!</p>
 		{/if}
-		<div class="max-w-sm">
+		<div class="max-w-md">
 			<QrCode value={lni.payment_request} />
 		</div>
 	{:catch error}

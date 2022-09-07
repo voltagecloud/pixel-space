@@ -9,12 +9,12 @@
 
 	function updateQrCode(data: string) {
 		container.innerHTML = '';
-		container.appendChild(qrcanvas({ data, cellSize: 8, effect: { type: "round" } }));
+		container.appendChild(qrcanvas({ data, effect: { type: "round" } }));
 	}
 </script>
 
 <figure class="flex flex-col my-4 border rounded shadow-md">
-	<div class="border-b p-4 flex" bind:this={container} />
+	<div class="border-b p-4 flex overflow-hidden" bind:this={container} />
 	<figcaption class="p-4 break-words font-mono text-xs">{value}</figcaption>
 </figure>
 
