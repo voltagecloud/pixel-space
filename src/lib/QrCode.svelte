@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { qrcanvas } from 'qrcanvas';
 
-	export let value: string | number;
+	export let value: unknown;
 
 	let container: HTMLDivElement;
 
@@ -9,11 +9,17 @@
 
 	function updateQrCode(data: string) {
 		container.innerHTML = '';
-		container.appendChild(qrcanvas({ data }));
+		container.appendChild(qrcanvas({ data, cellSize: 8, effect: { type: "round" } }));
 	}
 </script>
 
 <figure class="flex flex-col my-4 border rounded shadow-md">
-	<div class="border-b p-4" bind:this={container} />
+	<div class="border-b p-4 flex" bind:this={container} />
 	<figcaption class="p-4 break-words font-mono text-xs">{value}</figcaption>
 </figure>
+
+<style lang="postcss">
+	div > :global(canvas) {
+		flex: 1;
+	}
+</style>
