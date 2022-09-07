@@ -1,18 +1,19 @@
 <script lang="ts">
-	import { toDataURL } from 'qrcode';
+	import { qrcanvas } from 'qrcanvas';
 
-	export let value = '';
-	export let scale = 8;
+	export let value: string | number;
 
-	let data: Promise<string>;
-	$: if (value) {
-		data = toDataURL(value, { margin: 0, scale });
+	let container: HTMLDivElement;
+
+	$: container && updateQrCode(String(value));
+
+	function updateQrCode(data: string) {
+		container.innerHTML = '';
+		container.appendChild(qrcanvas({ data }));
 	}
 </script>
 
-{#await data then src}
-	<figure class="flex flex-col my-4 border rounded shadow-md">
-		<img {src} alt={value} class="p-4 border-b" />
-		<figcaption class="p-4 break-words font-mono text-xs">{value}</figcaption>
-	</figure>
-{/await}
+<figure class="flex flex-col my-4 border rounded shadow-md">
+	<div class="border-b p-4" bind:this={container} />
+	<figcaption class="p-4 break-words font-mono text-xs">{value}</figcaption>
+</figure>

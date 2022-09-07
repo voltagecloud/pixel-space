@@ -14,6 +14,7 @@ processes = []
 
 [env]
   DATABASE_URL = "file:/data/pixels.db"
+  ORIGIN = "https://pixel-space.fly.dev"
   PORT = "8080"
 
 [experimental]

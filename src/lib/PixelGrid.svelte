@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import { gridCols, gridSize } from './constants';
+	import { browser } from '$app/environment';
 	import draw from './draw';
 
 	export let pixelColors: Record<number, string> = {};
@@ -24,20 +25,22 @@
 	}
 </script>
 
-<ul
-	use:draw
-	on:change={handleChange}
-	style={`grid-template-columns: repeat(${cols}, minmax(0, 1fr)); --pixel-drawn: ${drawColor}`}
->
-	{#each Array(size) as _, index}
-		{@const id = `pixel-${index}`}
-		{@const color = pixelColors[index]}
-		<li title={color} class:blank={!color}>
-			<input type="checkbox" {id} name="pixel" value={index} />
-			<label for={id} style={color && `--pixel-color: ${color}`} />
-		</li>
-	{/each}
-</ul>
+{#if browser}
+	<ul
+		use:draw
+		on:change={handleChange}
+		style={`grid-template-columns: repeat(${cols}, minmax(0, 1fr)); --pixel-drawn: ${drawColor}`}
+	>
+		{#each Array(size) as _, index}
+			{@const id = `pixel-${index}`}
+			{@const color = pixelColors[index]}
+			<li title={color} class:blank={!color}>
+				<input type="checkbox" {id} name="pixel" value={index} />
+				<label for={id} style={color && `--pixel-color: ${color}`} />
+			</li>
+		{/each}
+	</ul>
+{/if}
 
 <style lang="postcss">
 	ul {
