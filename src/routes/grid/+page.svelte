@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 
 	import PixelGrid from '$lib/PixelGrid.svelte';
@@ -12,19 +13,17 @@
 	let drawCount = 0;
 </script>
 
-<form
-	class="lg:absolute lg:inset-0 flex flex-col lg:flex-row"
-	action="/purchase"
-	method="post"
->
+<form class="lg:absolute lg:inset-0 flex flex-col lg:flex-row" action="/purchase" method="post">
 	<section class="flex-1 flex flex-col pb-4 lg:p-4 overflow-auto">
 		<div class="flex-1 flex justify-center items-start">
-			<PixelGrid
-				{size}
-				{drawColor}
-				{pixelColors}
-				on:change={({ detail }) => (drawCount = detail.length)}
-			/>
+			{#if !browser}
+				<PixelGrid
+					{size}
+					{drawColor}
+					{pixelColors}
+					on:change={({ detail }) => (drawCount = detail.length)}
+				/>
+			{/if}
 		</div>
 	</section>
 	<aside class="border-t lg:border-t-0 lg:border-l pt-4 lg:p-4 lg:overflow-auto lg:basis-52">
