@@ -5,9 +5,9 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
+		"prestart": "prisma migrate deploy",
 		"start": "node build/index.js",
 		"preview": "vite preview",
-		"postinstall": "prisma migrate dev",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",

@@ -8,8 +8,12 @@ processes = []
 [build]
   builder = "heroku/buildpacks:20"
 
+[mounts]
+  source="pixel_data"
+  destination="/data"
+
 [env]
-  DATABASE_URL = "file:./pixels.db"
+  DATABASE_URL = "file:/data/pixels.db"
   PORT = "8080"
 
 [experimental]

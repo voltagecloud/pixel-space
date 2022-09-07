@@ -2,6 +2,7 @@
 
 ```bash
 yarn install
+yarn prisma migrate dev
 yarn run dev
 ```
 
