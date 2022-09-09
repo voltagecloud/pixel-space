@@ -1,45 +1,50 @@
-<h1 class="text-4xl">Use your API</h1>
+<h1 class="text-4xl">Use your own JSON API</h1>
+
+<p>It should conform to the following spec...</p>
 
 <ul class="list-outside list-disc pl-4">
 	<li>
 		<h2>GET /grid</h2>
-		Response:
+		<p>Sample Response:</p>
 		<pre>{JSON.stringify({ rows: 10, cols: 10, pixels: { 1: '#aabbcc' } })}</pre>
 	</li>
 	<li>
 		<h2>POST /purchase</h2>
-		Payload:
+		<p>Sample Payload:</p>
 		<pre>{JSON.stringify({ pixels: [1, 2, 3], color: '#aabbcc' })}</pre>
 
-		Response:
+		<p>Sample Response:</p>
 		<pre>{JSON.stringify({ purchaseId: '123-456-789' })}</pre>
 	</li>
 	<li>
 		<h2>POST /payment/create</h2>
-		Payload:
+		<p>Sample Payload:</p>
 		<pre>{JSON.stringify({ purchaseId: '123-456-789', amount: 150 })}</pre>
 
-		Response:
-		<pre>{JSON.stringify({ hash: '…', request: 'LNBC…' })}</pre>
+		<p>Sample Response:</p>
+		<pre>{JSON.stringify({ hash: 'abcd…', request: 'lnbc…' })}</pre>
 	</li>
 	<li>
 		<h2>POST /payment/check</h2>
-		Payload:
-		<pre>{JSON.stringify({ hash: '…' })}</pre>
+		<p>Sample Payload:</p>
+		<pre>{JSON.stringify({ hash: 'abcd…' })}</pre>
 
-		Response:
+		<p>Sample Response:</p>
 		<pre>{JSON.stringify({ paid: false })}</pre>
 	</li>
 </ul>
 
 <style lang="postcss">
 	li {
-		@apply my-4;
+		@apply my-8;
 	}
 	li > h2 {
 		@apply font-mono font-bold;
 	}
+	li > p {
+		@apply text-xs text-gray-400 mt-2;
+	}
 	pre {
-		@apply border rounded p-1;
+		@apply border rounded p-1 inline-block;
 	}
 </style>
