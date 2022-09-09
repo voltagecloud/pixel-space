@@ -5,7 +5,10 @@
 
 	<ul class="list-inside list-disc">
 		<li>
-			<a href="/grid">view grid</a>
+			<a href="/grid">original grid</a>
+		</li>
+		<li>
+			<a href="/yourapi">your api</a>
 		</li>
 	</ul>
 </main>
