@@ -26,9 +26,9 @@ def main() -> None:
     db.pixel.find_many(take=5)
     apixel = db.pixel.find_many(take=5)[0]
 
-    db.purchase.create(data={ "color": "ffffff", "pixels":[ apixel ] })
     db.purchase.create(data={"color":"red"})
     db.purchase.create(data={"color":"red", "complete": False})
+    db.purchase.create(data={"color":"red", "complete": False, "pixels": {"connect": [{"id":1},{"id":2}]}  })
     db.disconnect()
 
 if __name__ == '__main__':
