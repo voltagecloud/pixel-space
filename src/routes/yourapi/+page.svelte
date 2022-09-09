@@ -6,12 +6,12 @@
 	<li>
 		<h2>GET /grid</h2>
 		<p>Sample Response:</p>
-		<pre>{JSON.stringify({ rows: 10, cols: 10, pixels: { 1: '#aabbcc' } })}</pre>
+		<pre>{JSON.stringify({ rows: 10, cols: 10, pixels: ['#aabbcc', '#aabbcc', '#aabbcc'] })}</pre>
 	</li>
 	<li>
 		<h2>POST /purchase</h2>
 		<p>Sample Payload:</p>
-		<pre>{JSON.stringify({ pixels: [1, 2, 3], color: '#aabbcc' })}</pre>
+		<pre>{JSON.stringify({ pixels: [0, 21, 66], color: '#ff0066' })}</pre>
 
 		<p>Sample Response:</p>
 		<pre>{JSON.stringify({ purchaseId: '123-456-789' })}</pre>
