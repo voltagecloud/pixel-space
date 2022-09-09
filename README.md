@@ -58,6 +58,10 @@ Alternatively, it wouldn't be a huge lift to make pixel-space deployable on a "s
 
 Anyway, here's how to fly.io:
 
+### Create a fly.io account
+
+[fly.io](https://fly.io/) (you can use your github account)
+
 ### Install flyctl
 
 ```
@@ -66,9 +70,13 @@ curl -L https://fly.io/install.sh | sh
 
 ### Generate fly.toml file
 
+There's already a fly.toml file in this repo, but that's for our own deployment. You can copy this config and then customize it by running:
+
 ```
 flyctl launch
 ```
+
+Say yes to "Would you like to copy its configuration to the new app?"
 
 Enter an app name and region, say no to postgres and don't deploy now.
 
