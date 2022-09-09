@@ -5,3 +5,4 @@ node_modules
 /package
 .env.local
 /prisma/dev.db*
+yarn-error.log
