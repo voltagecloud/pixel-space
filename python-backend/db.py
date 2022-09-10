@@ -2,6 +2,7 @@ from prisma import Prisma
 import code
 from datetime import datetime
 
+
 def main() -> None:
     # db = Prisma(
     #     http={
@@ -10,9 +11,9 @@ def main() -> None:
     # )
 
     with Prisma() as db:
-    # db.connect()
+        # db.connect()
 
-    # write your queries here
+        # write your queries here
         code.interact(local=dict(globals(), **locals()))
     # db.pixel.create({
     #     "id": 1234,
@@ -26,10 +27,17 @@ def main() -> None:
     db.pixel.find_many(take=5)
     apixel = db.pixel.find_many(take=5)[0]
 
-    db.purchase.create(data={"color":"red"})
-    db.purchase.create(data={"color":"red", "complete": False})
-    db.purchase.create(data={"color":"red", "complete": False, "pixels": {"connect": [{"id":1},{"id":2}]}  })
+    db.purchase.create(data={"color": "red"})
+    db.purchase.create(data={"color": "red", "complete": False})
+    db.purchase.create(
+        data={
+            "color": "red",
+            "complete": False,
+            "pixels": {"connect": [{"id": 1}, {"id": 2}]},
+        }
+    )
     db.disconnect()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

@@ -3,3 +3,4 @@ prisma
 requests
 Pillow
 webcolors
+black
