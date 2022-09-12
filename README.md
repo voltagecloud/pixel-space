@@ -3,6 +3,7 @@
 ```bash
 yarn install
 yarn prisma migrate dev
+yarn prisma db seed
 yarn run dev
 ```
 
