@@ -8,7 +8,7 @@
 	export let data: PageData;
 	const { pixelColors, size } = data;
 
-	let drawColor = $page.url.hash || '#ff5500';
+	let drawColor = $page.url.hash || '#000000';
 	let drawCount = 0;
 </script>
 
