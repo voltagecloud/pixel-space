@@ -5,3 +5,4 @@ node_modules
 /package
 .env.local
 /prisma/dev.db*
+python-backend/dev.db*
