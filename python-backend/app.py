@@ -36,7 +36,7 @@ def purchase():
 
     # Create Purchase Object
     with Prisma() as db:
-        purchase = db.purchase.create(data={"color": data["color"], "pixels": {"connect": [{"id":0},{"id":2}]}, "complete": False})
+        purchase = db.purchase.create(data={"color": data["color"], "pixels": {"connect": [{"id":1},{"id":2}]}, "complete": False})
     
     purchase_id = purchase.id
     response = { "purchaseId": purchase_id }
@@ -73,10 +73,13 @@ def create_invoice():
         f"{lnbits_url}/api/v1/payments", headers=lnbits_header, json=invoice_details
     ).json()
     print(lnbits_invoice)
+    payment_hash = lnbits_invoice["payment_hash"]
     response = {
-        "hash": lnbits_invoice["payment_hash"],
+        "hash": payment_hash,
         "request": lnbits_invoice["payment_request"]
     }
+
+
 
     # Create Payment Object and Link payment object to purchase object
     with Prisma() as db:
@@ -98,7 +101,7 @@ def check():
     data = request.json
     print(data)
 
-    payment_hash = data["payment_hash"]
+    payment_hash = data["hash"]
 
     payment = db.payment.find_unique(where={"hash": payment_hash})
 
