@@ -103,7 +103,8 @@ def check():
 
     payment_hash = data["hash"]
 
-    payment = db.payment.find_unique(where={"hash": payment_hash})
+    with Prisma() as db:
+        payment = db.payment.find_unique(where={"hash": payment_hash})
 
     if not payment:
         return "not found", 404
