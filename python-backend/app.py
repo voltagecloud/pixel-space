@@ -125,9 +125,11 @@ def grid():
     # TODO: Get the number of columns from some kind of config file
     return json.dumps({"cols": count, "pixels": colors})
 
-@app.route("/webhook")
+@app.route("/webhook", methods=["GET", "POST"])
 def webhook():
     print("received a webook event!")
     args = request.args
+    data = request.json
+    print(data)
     print(args)
     return "success"
