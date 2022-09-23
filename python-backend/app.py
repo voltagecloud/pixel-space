@@ -58,7 +58,7 @@ def create_invoice():
     print(data)
 
     # Create a lightning invoice
-    invoice_details = {"out": False, "amount": 69, "memo": data["purchaseId"], "unit": "sats"}
+    invoice_details = {"out": True, "amount": 69, "memo": data["purchaseId"], "unit": "sats"}
     lnbits_invoice = requests.post(
         f"{lnbits_url}/api/v1/payments", headers=lnbits_header, json=invoice_details
     ).json()
