@@ -61,7 +61,7 @@ def create_invoice():
     invoice_details = {"out": False, "amount": 69, "memo": data["purchaseId"], "unit": "sats"}
     lnbits_invoice = requests.post(
         f"{lnbits_url}/api/v1/payments", headers=lnbits_header, json=invoice_details
-    )
+    ).json()
     response = {
         "hash": lnbits_invoice["payment_hash"],
         "request": lnbits_invoice["payment_request"],
@@ -75,7 +75,7 @@ def create_invoice():
     #     db.payment.create(data={"purchaseId": purchase_id, "memo": {"connect": purchase_id }})
 
     # return
-    return response
+    return json.dumps(response)
 
 
 @app.route("/payment/check", methods=["POST"])
