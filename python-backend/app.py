@@ -10,10 +10,16 @@ app = Flask(__name__)
 lnbits_url = "https://851ac819d2.d.voltageapp.io"
 lnbits_header = {"X-Api-Key": "4e8c1512e3ed43edbc42fdcac30829a0"}
 
+# https://851ac819d2.d.voltageapp.io/wallet?usr=87e41eb2c04b4789a1d5c01eef06fec8&wal=cc7173f640a140d69517b305de49e48f
+
+
 
 @app.route("/purchase", methods=["POST"])
 def purchase():
     """
+        When the user wants to select a set of pixels to color, they use this API. It is just returns a 
+    purchase order id, which can then be used to create a payment request.
+
     request: { pixels: [0,21,66], color: '#ff0066' }
     response: { purchaseId: '123-456-789' }
     """
@@ -36,6 +42,8 @@ def purchase():
 @app.route("/payment/create", methods=["POST"])
 def create_invoice():
     """
+        When the user wants to pay for their pixels, they can use this endpoint to generate a lightning,
+    payment request. The user is allowed to specify a larger amount than the number of pixels as a donation.
     request: { purchaseId: '123-456-789', amount: 150 }
     response: { hash: 'abcd…', request: 'lnbc…' }
     """
@@ -48,7 +56,10 @@ def create_invoice():
     lnbits_invoice = requests.post(
         f"{lnbits_url}/api/v1/payments", headers=lnbits_header, json=invoice_details
     )
-    response = {"hash": lnbits_invoice["payment_hash"], "request": lnbits_invoice["payment_request"]}
+    response = {
+        "hash": lnbits_invoice["payment_hash"],
+        "request": lnbits_invoice["payment_request"]
+    }
 
 
     # TODO: Create Payment Object
@@ -86,6 +97,8 @@ def grid():
     """
     response: { cols: 100, pixels: ['#aabbcc', '#aabbcc', '…'] }
     """
+    # TODO: Read config file
+
     with Prisma() as db:
         pixels = db.pixel.find_many(take=2500)
 
@@ -94,3 +107,7 @@ def grid():
 
     # TODO: Get the number of columns from some kind of config file
     return json.dumps({"cols": count, "pixels": colors})
+
+@app.route("/webhook")
+def webhook():
+    pass
