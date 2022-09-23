@@ -8,7 +8,9 @@ import uuid
 app = Flask(__name__)
 
 lnbits_url = "https://851ac819d2.d.voltageapp.io"
-lnbits_header = {"X-Api-Key": "4e8c1512e3ed43edbc42fdcac30829a0"}
+lnbits_header = {
+    "X-Api-Key": "4e8c1512e3ed43edbc42fdcac30829a0",
+}
 
 # https://851ac819d2.d.voltageapp.io/wallet?usr=87e41eb2c04b4789a1d5c01eef06fec8&wal=cc7173f640a140d69517b305de49e48f
 
@@ -58,15 +60,20 @@ def create_invoice():
     print(data)
 
     # Create a lightning invoice
-    invoice_details = {"out": True, "amount": 69, "memo": data["purchaseId"], "unit": "sats"}
+    invoice_details = {
+        "out": False,
+        "amount": 69,
+        "memo": data["purchaseId"],
+        "unit": "sat",
+        "webhook": "https://Pixel-Space.samvoltage.repl.co/webhook"
+    }
     lnbits_invoice = requests.post(
         f"{lnbits_url}/api/v1/payments", headers=lnbits_header, json=invoice_details
     ).json()
     print(lnbits_invoice)
     response = {
         "hash": lnbits_invoice["payment_hash"],
-        "request": lnbits_invoice["payment_request"],
-        "webhook": "https://Pixel-Space.samvoltage.repl.co/webhook"
+        "request": lnbits_invoice["payment_request"]
     }
 
 
@@ -121,4 +128,6 @@ def grid():
 @app.route("/webhook")
 def webhook():
     print("received a webook event!")
+    args = request.args
+    print(args)
     return "success"
