@@ -34,12 +34,11 @@ def purchase():
     data = request.json
     print(data)
 
-    # TODO: Create Purchase Object
-    # with Prisma() as db:
-    #     db.purchase.create(data={"color": data["color"], "pixels": {"connect": [{"id":0},{"id":2}]}, "complete": False})
+    # Create Purchase Object
+    with Prisma() as db:
+        purchase = db.purchase.create(data={"color": data["color"], "pixels": {"connect": [{"id":0},{"id":2}]}, "complete": False})
     
-    # TODO: Remove this dummy
-    purchase_id = str(uuid.uuid4())
+    purchase_id = purchase.id
     response = { "purchaseId": purchase_id }
 
     # make a purchase object
@@ -59,11 +58,14 @@ def create_invoice():
     data = request.json
     print(data)
 
+    purchase_id = data["purchaseId"]
+    amount = data["amount"]
+
     # Create a lightning invoice
     invoice_details = {
         "out": False,
-        "amount": 69,
-        "memo": data["purchaseId"],
+        "amount": amount,
+        "memo": purchase_id,
         "unit": "sat",
         "webhook": "https://Pixel-Space.samvoltage.repl.co/webhook"
     }
@@ -76,11 +78,9 @@ def create_invoice():
         "request": lnbits_invoice["payment_request"]
     }
 
-
-    # TODO: Create Payment Object
-    # purchase_id = data["purchaseId"]
-    # with Prisma() as db:
-    #     db.payment.create(data={"purchaseId": purchase_id, "memo": {"connect": purchase_id }})
+    # Create Payment Object and Link payment object to purchase object
+    with Prisma() as db:
+        db.payment.create(data={"memo": {"connect": {"id": purchase_id}}, "hash": payment_hash, "amount": amount, "paid": False})
 
     # return
     return json.dumps(response)
@@ -99,11 +99,13 @@ def check():
     print(data)
 
     payment_hash = data["payment_hash"]
-    lnbits_invoice = requests.get(
-        f"{lnbits_url}/api/v1/payments/{payment_hash}", headers=lnbits_header
-    ).json()
 
-    is_paid = lnbits_invoice["paid"]
+    payment = db.payment.find_unique(where={"hash": payment_hash})
+
+    if not payment:
+        return "not found", 404
+
+    is_paid = payment.paid
 
     return json.dumps({"paid": is_paid})
 
@@ -131,5 +133,9 @@ def webhook():
     args = request.args
     data = request.json
     print(data)
+
+    payment_hash = data["payment_hash"]
+
+    # TODO: Mark payment as paid, and draw pixels
     print(args)
     return "success"
