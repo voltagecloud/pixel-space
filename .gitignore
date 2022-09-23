@@ -8,3 +8,4 @@ node_modules
 python-backend/dev.db*
 *.pyc
 __pycache__
+venv/

@@ -14,6 +14,7 @@ lnbits_header = {"X-Api-Key": "4e8c1512e3ed43edbc42fdcac30829a0"}
 
 @app.route("/", methods=["GET"])
 def hello_world():
+    print("inside hello_world")
     return "hello-world"
 
 @app.route("/purchase", methods=["POST"])
@@ -25,6 +26,8 @@ def purchase():
     request: { pixels: [0,21,66], color: '#ff0066' }
     response: { purchaseId: '123-456-789' }
     """
+    print("inside purchase")
+
     # get data from POST body
     data = request.json
     print(data)
@@ -49,6 +52,7 @@ def create_invoice():
     request: { purchaseId: '123-456-789', amount: 150 }
     response: { hash: 'abcd…', request: 'lnbc…' }
     """
+    print("inside create_invoice")
     # get data from POST body
     data = request.json
     print(data)
@@ -81,6 +85,7 @@ def check():
     response: { paid: false }
     """
 
+    print("inside check")
     # get data from POST body
     data = request.json
     print(data)
@@ -101,6 +106,7 @@ def grid():
     response: { cols: 100, pixels: ['#aabbcc', '#aabbcc', '…'] }
     """
     # TODO: Read config file
+    print("inside grid")
 
     with Prisma() as db:
         pixels = db.pixel.find_many(take=2500)
