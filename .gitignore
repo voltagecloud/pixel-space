@@ -6,3 +6,5 @@ node_modules
 .env.local
 /prisma/dev.db*
 python-backend/dev.db*
+*.pyc
+__pycache__

@@ -12,7 +12,9 @@ lnbits_header = {"X-Api-Key": "4e8c1512e3ed43edbc42fdcac30829a0"}
 
 # https://851ac819d2.d.voltageapp.io/wallet?usr=87e41eb2c04b4789a1d5c01eef06fec8&wal=cc7173f640a140d69517b305de49e48f
 
-
+@app.route("/", methods=["GET"])
+def hello_world():
+    return "hello-world"
 
 @app.route("/purchase", methods=["POST"])
 def purchase():
@@ -58,7 +60,8 @@ def create_invoice():
     )
     response = {
         "hash": lnbits_invoice["payment_hash"],
-        "request": lnbits_invoice["payment_request"]
+        "request": lnbits_invoice["payment_request"],
+        "webhook": "https://Pixel-Space.samvoltage.repl.co/webhook"
     }
 
 
@@ -110,4 +113,5 @@ def grid():
 
 @app.route("/webhook")
 def webhook():
-    pass
+    print("received a webook event!")
+    return "success"
