@@ -19,6 +19,7 @@ pip install -r requirements.txt
 
 
 # Sqlite DB Setup
+prisma py fetch
 prisma db push
 prisma db seed
 ```

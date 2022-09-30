@@ -79,8 +79,6 @@ def create_invoice():
         "request": lnbits_invoice["payment_request"]
     }
 
-
-
     # Create Payment Object and Link payment object to purchase object
     with Prisma() as db:
         db.payment.create(data={"memo": {"connect": {"id": purchase_id}}, "hash": payment_hash, "amount": amount, "paid": False})
@@ -140,6 +138,18 @@ def webhook():
 
     payment_hash = data["payment_hash"]
 
-    # TODO: Mark payment as paid, and draw pixels
+
+    with Prisma() as db:
+        # Mark payment as paid
+        payment = db.payment.find_unique(where={"hash": payment_hash})
+        if payment is None:
+            return "unknown", 404
+        db.payment.update(data={"paid": True}, where={"hash": payment.hash})
+        # Mark purchase as completed
+        purchase_id = payment.purchaseId
+        purchase = db.purchase.find_unique(where={"id": purchase_id})
+        db.purchase.update(data={"complete": True}, where={"id": purchase_id})
+        # TODO: Draw pixels
+        pixels = purchase.pixels
     print(args)
     return "success"
