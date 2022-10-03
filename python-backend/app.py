@@ -34,10 +34,12 @@ def purchase():
     data = request.json
     print(data)
 
+    pixel_ids = [{"id": i} for i in data["pixels"]]
+
     # Create Purchase Object
     with Prisma() as db:
         purchase = db.purchase.create(
-            data={"color": data["color"], "pixels": {"connect": [{"id":1},{"id":2}]}, "complete": False},
+            data={"color": data["color"], "pixels": {"connect": pixel_ids}, "complete": False},
             include={"pixels": True}
         )
     
