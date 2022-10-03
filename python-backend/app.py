@@ -12,7 +12,7 @@ lnbits_header = {
     "X-Api-Key": "4e8c1512e3ed43edbc42fdcac30829a0",
 }
 
-#   
+#   https://851ac819d2.d.voltageapp.io/wallet?usr=87e41eb2c04b4789a1d5c01eef06fec8&wal=cc7173f640a140d69517b305de49e48f
 
 @app.route("/", methods=["GET"])
 def hello_world():
@@ -70,7 +70,7 @@ def create_invoice():
         "amount": amount,
         "memo": purchase_id,
         "unit": "sat",
-        "webhook": "https://Pixel-Space.samvoltage.repl.co/webhook"
+        "webhook": "http://35.93.109.236:5000/webhook"
     }
     lnbits_invoice = requests.post(
         f"{lnbits_url}/api/v1/payments", headers=lnbits_header, json=invoice_details
@@ -114,6 +114,10 @@ def check():
         return "not found", 404
 
     is_paid = payment.paid
+    
+    # Check paid status from lnbits
+    
+    # Write to database if it is paid
 
     return json.dumps({"paid": is_paid})
 
