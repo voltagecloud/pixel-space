@@ -156,15 +156,17 @@ def webhook():
     with Prisma() as db:
         # Mark payment as paid
         payment = db.payment.find_unique(
-            where={"hash": payment_hash},
-            include={"pixels": True}
+            where={"hash": payment_hash}
         )
         if payment is None:
             return "unknown", 404
         db.payment.update(data={"paid": True}, where={"hash": payment.hash})
         # Mark purchase as completed
         purchase_id = payment.purchaseId
-        purchase = db.purchase.find_unique(where={"id": purchase_id})
+        purchase = db.purchase.find_unique(
+            where={"id": purchase_id},
+            include={"pixels": True}
+        )
         db.purchase.update(data={"complete": True}, where={"id": purchase_id})
         # TODO: Draw pixels
         pixels = purchase.pixels
