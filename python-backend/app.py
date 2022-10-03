@@ -178,6 +178,7 @@ def webhook():
             print(pix.color)
             db.pixel.update(
                 data={"color": purchase.color},
+                where={"id": pix.id}
             )
     print(args)
     return "success"
