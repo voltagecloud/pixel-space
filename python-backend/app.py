@@ -41,6 +41,8 @@ def purchase():
             include={"pixels": True}
         )
     
+    print("Created a purchse")
+    print(purchase)
     purchase_id = purchase.id
     response = { "purchaseId": purchase_id }
 
