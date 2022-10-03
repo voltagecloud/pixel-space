@@ -163,6 +163,7 @@ def webhook():
         db.purchase.update(data={"complete": True}, where={"id": purchase_id})
         # TODO: Draw pixels
         pixels = purchase.pixels
+        print(purchase)
         for pix in pixels:
             print(pix.id)
             print(pix.color)
