@@ -162,21 +162,30 @@ def webhook():
         )
         if payment is None:
             return "unknown", 404
-        db.payment.update(data={"paid": True}, where={"hash": payment.hash})
+        
+        db.payment.update(
+            data={"paid": True},
+            where={"hash": payment.hash}
+        )
+        
         # Mark purchase as completed
         purchase_id = payment.purchaseId
         purchase = db.purchase.find_unique(
             where={"id": purchase_id},
             include={"pixels": True}
         )
-        db.purchase.update(data={"complete": True}, where={"id": purchase_id})
+        new_color = purchase.color
+        print(f"Drawing board with new color: {new_color}")
+        db.purchase.update(
+            data={"complete": True},
+            where={"id": purchase_id}
+        )
         # Draw pixels on board
         pixels = purchase.pixels
         print(purchase)
         for pix in pixels:
             print(pix.id)
             print(pix.color)
-            purchases = pix.purchases
             db.pixel.update(
                 data={"color": purchase.color},
                 where={"id": pix.id}
