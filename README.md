@@ -22,4 +22,9 @@ pip install -r requirements.txt
 prisma py fetch
 prisma db push
 prisma db seed
+
+
+# Start the API Server
+flask run -h 0.0.0.0
 ```
+

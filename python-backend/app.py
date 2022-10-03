@@ -12,7 +12,7 @@ lnbits_header = {
     "X-Api-Key": "4e8c1512e3ed43edbc42fdcac30829a0",
 }
 
-# https://851ac819d2.d.voltageapp.io/wallet?usr=87e41eb2c04b4789a1d5c01eef06fec8&wal=cc7173f640a140d69517b305de49e48f
+#   
 
 @app.route("/", methods=["GET"])
 def hello_world():
@@ -38,7 +38,7 @@ def purchase():
     with Prisma() as db:
         purchase = db.purchase.create(
             data={"color": data["color"], "pixels": {"connect": [{"id":1},{"id":2}]}, "complete": False},
-            include={"pixels": True}
+            include={"memo": True}
         )
     
     purchase_id = purchase.id
