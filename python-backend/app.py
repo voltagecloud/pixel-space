@@ -74,7 +74,7 @@ def create_invoice():
         "amount": amount,
         "memo": purchase_id,
         "unit": "sat",
-        "webhook": "http://35.93.109.236:5000/webhook"
+        "webhook": "35.93.109.236:5000/webhook"
     }
     lnbits_invoice = requests.post(
         f"{lnbits_url}/api/v1/payments", headers=lnbits_header, json=invoice_details
