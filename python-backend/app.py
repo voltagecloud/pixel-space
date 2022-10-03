@@ -155,7 +155,10 @@ def webhook():
 
     with Prisma() as db:
         # Mark payment as paid
-        payment = db.payment.find_unique(where={"hash": payment_hash})
+        payment = db.payment.find_unique(
+            where={"hash": payment_hash},
+            include={"pixels": True}
+        )
         if payment is None:
             return "unknown", 404
         db.payment.update(data={"paid": True}, where={"hash": payment.hash})
