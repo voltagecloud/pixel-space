@@ -142,9 +142,11 @@ def grid():
 @app.route("/webhook", methods=["GET", "POST"])
 def webhook():
     print("received a webook event!")
+    print(request)
     args = request.args
     data = request.json
     print(data)
+
 
     payment_hash = data["payment_hash"]
 
