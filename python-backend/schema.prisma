@@ -8,6 +8,7 @@
 generator client {
   provider  = "prisma-client-py"
   interface = "sync"
+  //interface = "asyncio"
 }
 
 datasource db {

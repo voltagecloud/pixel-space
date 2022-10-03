@@ -36,7 +36,10 @@ def purchase():
 
     # Create Purchase Object
     with Prisma() as db:
-        purchase = db.purchase.create(data={"color": data["color"], "pixels": {"connect": [{"id":1},{"id":2}]}, "complete": False})
+        purchase = db.purchase.create(
+            data={"color": data["color"], "pixels": {"connect": [{"id":1},{"id":2}]}, "complete": False},
+            include={"pixels": True}
+        )
     
     purchase_id = purchase.id
     response = { "purchaseId": purchase_id }
@@ -81,7 +84,10 @@ def create_invoice():
 
     # Create Payment Object and Link payment object to purchase object
     with Prisma() as db:
-        db.payment.create(data={"memo": {"connect": {"id": purchase_id}}, "hash": payment_hash, "amount": amount, "paid": False})
+        db.payment.create(
+            data={"memo": {"connect": {"id": purchase_id}}, "hash": payment_hash, "amount": amount, "paid": False},
+            include={"purchase": True}
+        )
 
     # return
     return json.dumps(response)
