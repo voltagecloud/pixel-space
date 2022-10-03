@@ -38,7 +38,7 @@ def purchase():
     with Prisma() as db:
         purchase = db.purchase.create(
             data={"color": data["color"], "pixels": {"connect": [{"id":1},{"id":2}]}, "complete": False},
-            include={"memo": True}
+            include={"pixels": True}
         )
     
     purchase_id = purchase.id
