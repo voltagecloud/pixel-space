@@ -86,7 +86,7 @@ def create_invoice():
     with Prisma() as db:
         db.payment.create(
             data={"memo": {"connect": {"id": purchase_id}}, "hash": payment_hash, "amount": amount, "paid": False},
-            include={"purchase": True}
+            include={"memo": True}
         )
 
     # return
