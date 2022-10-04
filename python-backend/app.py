@@ -120,10 +120,17 @@ def check():
     is_paid = payment.paid
     
     # Check paid status from lnbits
+    lnbits_invoice_status = requests.get(
+        f"{lnbits_url}/api/v1/payments/{payment_hash}", headers=lnbits_header
+    ).json()
     
-    # Write to database if it is paid
+    is_paid_now = lnbits_invoice_status["paid"]
 
-    return json.dumps({"paid": is_paid})
+    # Write to database if it is paid, and db says it isnt
+    if is_paid_now and not is_paid:
+        mark_invoice_paid_and_draw(payment_hash)
+
+    return json.dumps({"paid": is_paid_now})
 
 
 @app.route("/grid", methods=["GET"])
@@ -154,7 +161,15 @@ def webhook():
 
     payment_hash = data["payment_hash"]
 
+    mark_invoice_paid_and_draw(payment_hash)
 
+
+    print(args)
+    return "success"
+
+
+
+def mark_invoice_paid_and_draw(payment_hash):
     with Prisma() as db:
         # Mark payment as paid
         payment = db.payment.find_unique(
@@ -190,5 +205,3 @@ def webhook():
                 data={"color": purchase.color},
                 where={"id": pix.id}
             )
-    print(args)
-    return "success"
