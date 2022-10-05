@@ -3,6 +3,10 @@ import requests
 from prisma import Prisma
 import json
 import uuid
+import webcolors
+import base64
+from PIL import Image
+from io import BytesIO
 
 
 app = Flask(__name__)
@@ -149,6 +153,31 @@ def grid():
 
     # TODO: Get the number of columns from some kind of config file
     return json.dumps({"cols": count, "pixels": colors})
+
+
+@app.route("/image", methods=["GET"])
+def image():
+    """
+    response: { cols: 100, pixels: ['#aabbcc', '#aabbcc', '…'] }
+    """
+    with Prisma() as db:
+        pixels = db.pixel.find_many(take=2500)
+
+    colors = [pixel.color for pixel in pixels]
+    colors_rgb = [tuple(webcolors.hex_to_rgb(x)) for x in colors ]
+
+    im = Image.new(mode="RGB", size=(50, 50))
+    im.putdata(colors_rgb)
+
+    with BytesIO() as output:
+        im.save(output, format="PNG")
+        contents = output.getvalue()
+
+    image_base64 = base64.b64encode(contents).decode()
+
+    output = f"<img style='display:block; width:100px;height:100px;' id='base64image' src='data:image/png;base64, {image_base64}'/>"
+
+    return output, 200   
 
 @app.route("/webhook", methods=["GET", "POST"])
 def webhook():
