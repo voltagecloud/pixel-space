@@ -170,12 +170,12 @@ def image():
     im.putdata(colors_rgb)
 
     with BytesIO() as output:
-        im.save(output, format="PNG")
+        im.save(output, format="JPEG")
         contents = output.getvalue()
 
     image_base64 = base64.b64encode(contents).decode()
 
-    output = f"<img style='display:block; width:100px;height:100px;' id='base64image' src='data:image/png;base64, {image_base64}'/>"
+    output = f"<img style='display:block; width:100px;height:100px;' id='base64image' src='data:image/jpeg;base64, {image_base64}'/>"
 
     return output, 200   
 
