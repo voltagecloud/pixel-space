@@ -38,16 +38,30 @@ def purchase():
     data = request.json
     print(data)
 
-    pixel_ids = [{"id": i} for i in data["pixels"]]
+
+
+    draw_requests = data["order"]
+    draw_ids = []
+
+    # Create Multiple Draw Objects
+    with Prisma() as db:
+        for color_order in draw_requests:
+            pixel_ids = [{"id": i} for i in color_order["pixels"]]
+            draw = db.draw.create(
+                data={"color": color_order["color"], "pixels": {"connect": pixel_ids}},
+                include={"pixels": True}
+            )
+            draw_ids.append({"id": draw.id})
+
 
     # Create Purchase Object
     with Prisma() as db:
         purchase = db.purchase.create(
-            data={"color": data["color"], "pixels": {"connect": pixel_ids}, "complete": False},
-            include={"pixels": True}
+            data={"drawings": {"connect": draw_ids}, "complete": False},
+            include={"drawings": True}
         )
     
-    print("Created a purchse")
+    print("Created a purchase")
     print(purchase)
     purchase_id = purchase.id
     response = { "purchaseId": purchase_id }
@@ -170,12 +184,12 @@ def image():
     im.putdata(colors_rgb)
 
     with BytesIO() as output:
-        im.save(output, format="JPEG")
+        im.save(output, format="PNG")
         contents = output.getvalue()
 
     image_base64 = base64.b64encode(contents).decode()
 
-    output = f"<img style='display:block; width:100px;height:100px;' id='base64image' src='data:image/jpeg;base64, {image_base64}'/>"
+    output = f"<img style='display:block; width:100px;height:100px; image-rendering: crisp-edges; image-rendering: pixelated;' id='base64image' src='data:image/png;base64, {image_base64}'/>"
 
     return output, 200   
 
@@ -216,21 +230,34 @@ def mark_invoice_paid_and_draw(payment_hash):
         purchase_id = payment.purchaseId
         purchase = db.purchase.find_unique(
             where={"id": purchase_id},
-            include={"pixels": True}
+            include={"drawings": True}
         )
-        new_color = purchase.color
-        print(f"Drawing board with new color: {new_color}")
+
         db.purchase.update(
             data={"complete": True},
             where={"id": purchase_id}
         )
-        # Draw pixels on board
-        pixels = purchase.pixels
-        print(purchase)
-        for pix in pixels:
-            print(pix.id)
-            print(pix.color)
-            db.pixel.update(
-                data={"color": purchase.color},
-                where={"id": pix.id}
+
+        drawings = [ draw.id for draw in  purchase.drawings  ]
+
+
+        for draw_id in drawings:
+            drawing = db.draw.find_unique(
+                where={"id": draw_id},
+                include={"pixels": True}
             )
+            print(drawing)
+
+            for draw_pix in drawing:
+                new_color = drawing.color
+
+                # Draw pixels on board
+                pixels = drawing.pixels
+                print(purchase)
+                for pix in pixels:
+                    print(pix.id)
+                    print(pix.color)
+                    db.pixel.update(
+                        data={"color": new_color},
+                        where={"id": pix.id}
+                    )

@@ -17,17 +17,24 @@ datasource db {
 }
 
 model Pixel {
-  id        Int        @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   color     String?
+  drawings  Draw[]
+  updatedAt DateTime @updatedAt
+}
+
+model Draw {
+  id        String     @id @default(uuid())
+  pixels    Pixel[]
+  color     String
   purchases Purchase[]
-  updatedAt DateTime   @updatedAt
 }
 
 model Purchase {
   id        String    @id @default(uuid())
-  pixels    Pixel[]
+  drawings  Draw[]
+  // pixels    Pixel[]
   complete  Boolean?
-  color     String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   payments  Payment[]
